@@ -1,0 +1,17 @@
+
+<div class='view-header'>
+	<span ng-if='dataModel.user.id !== null'>
+		manage existing user
+	</span>
+	<span ng-if='dataModel.user.id === null'>
+		create new user
+	</span>
+</div>
+
+<br/>
+Name {{ dataModel.user.name }}
+<br/>
+Surname {{ dataModel.user.surname }}
+<br/>
+Email {{ dataModel.user.email }}
+<br/>

@@ -1,0 +1,27 @@
+<div>
+	<div class='view-header'>
+		manage system users
+	</div>
+
+	<br/>
+
+	<!-- <div ng-repeat='user in existingUsers'>
+		{{ user.name }}, {{ user.surname }} - {{ user.email }}
+	</div> -->
+
+	<div>
+		<a ng-href="#/user/new">
+			<button type="button" class="btn btn-primary btn-sm">Add new user</button>
+		</a>
+	</div>
+
+	<br/>
+
+	<div
+		ui-grid="usersGridOptions"
+		ui-grid-pagination
+		style='width:100%;height:100%;'	
+	></div>
+
+	<br/>
+</div>
