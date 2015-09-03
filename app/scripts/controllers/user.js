@@ -10,16 +10,22 @@
 angular.module('mallcmsApp')
 	.controller('UserCtrl', function ($scope, $routeParams, DataModel) {
 
+        console.log('$routeParams.userId');
+        console.log($routeParams.userId);
+
 		$scope.dataModel = DataModel;
 
 		$scope.dataModel.user = ($routeParams.userId !== 'new')
 		
 			? $scope.dataModel.user = $scope.dataModel.users.first(
 				function(x){ 
-  					return (x.id === $routeParams.userId); 
+  					return (x.id === parseInt($routeParams.userId)); 
   				})
   		
   			: new User(null, '', '', '');
+
+        console.log('$scope.dataModel.user');
+        console.log($scope.dataModel.user);
 
     	$scope.originalUserstate = new User(
       		$scope.dataModel.user.id,
@@ -36,7 +42,7 @@ angular.module('mallcmsApp')
     	$scope.userHasChanged = function() {
 
     		var changed =
-    			(
+                (
     			($scope.originalUserstate.email !== $scope.dataModel.user.email)
     			);
 
@@ -77,7 +83,7 @@ angular.module('mallcmsApp')
     	$scope.passwordIsValid = function() {
 
     		if (
-                    $scope.passwordIsStrong($scope.password.password)
+                    ($scope.passwordIsStrong($scope.password.password))
                     && 
                     ($scope.password.password === $scope.password.confirm)
                 ) {
