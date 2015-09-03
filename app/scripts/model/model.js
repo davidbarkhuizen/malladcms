@@ -18,7 +18,7 @@ function genRandomUser(id) {
 
 	var name = randomString(10);
 	var surname = randomString(10);
-	var email = randomString(10);
+	var email = randomString(10) + '@' + randomString(10) + '.' + randomString(3);
 
 	return new User(id, name, surname, email);
 }

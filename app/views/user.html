@@ -51,9 +51,16 @@
 			name='email'
 			ng-model="dataModel.user.email"
 			required
+			ui-validate="{ validemailpattern : 'emailPatternIsValid($value)', uniqueemail : 'emailIsUnique($value)' }"
 		/>
    		<div role='alert' class="error" ng-show="EditUserForm.email.$error.required">
    			required!
+		</div>
+		<div role='alert' class="error" ng-show="EditUserForm.email.$error.validemailpattern">
+   			not a valid email!
+		</div>
+		<div role='alert' class="error" ng-show="EditUserForm.email.$error.uniqueemail">
+   			this email is already in use!
 		</div>
 	</label>
 
@@ -110,7 +117,7 @@
 	<div>
 		<div ng-show='dataModel.user.id === null'>
 			<a ng-href="">
-				<button type="button" ng-click='' ng-disabled="(newUserInfoIsCompleteAndValid() == false)" class="btn btn-primary btn-sm">Create User</button>
+				<button type="button" ng-click='' ng-disabled="!canCreateUser()" class="btn btn-primary btn-sm">Create User</button>
 			</a>
 		</div>
 		<div ng-show='dataModel.user.id !== null'>
@@ -119,4 +126,6 @@
 			</a>
 		</div>
 	</div>
+
+	<br/>
 </div>

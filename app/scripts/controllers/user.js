@@ -76,7 +76,11 @@ angular.module('mallcmsApp')
 
     	$scope.passwordIsValid = function() {
 
-    		if ($scope.passwordIsStrong($scope.password.password)) {
+    		if (
+                    $scope.passwordIsStrong($scope.password.password)
+                    && 
+                    ($scope.password.password === $scope.password.confirm)
+                ) {
     			return true;
             }
     		else {
@@ -88,17 +92,79 @@ angular.module('mallcmsApp')
             return ($scope.password.password === passwordConfirm);
         };
 
-    	$scope.newUserInfoIsCompleteAndValid = function() {
+        $scope.emailPatternIsValid = function(email) {
+            if ( /(.+)@(.+){2,}\.(.+){2,}/.test(email) ){
+                return true;  
+            } 
+            else {
+                return false;
+            }
+        };
 
-    		var completed =
-    			(
-    				($scope.dataModel.user.name.length > 0)
-    				&&
-    				($scope.dataModel.user.surname.length > 0)
-    				&&
-    				($scope.dataModel.user.email.length > 0)
-	   			);
+        $scope.emailIsUnique = function(email) {
+            
+            for (var i = 0; i < $scope.dataModel.users.length; i++) {
 
-    		return (completed && $scope.passwordIsValid());
-    	};
+                var user = $scope.dataModel.users[i]; 
+
+                if (user.id == $scope.dataModel.user.id) {
+                    continue;
+                }
+
+                if (user.email == email) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        $scope.userEmailIsValid = function() {
+
+            if (
+                ($scope.emailPatternIsValid($scope.dataModel.user.email)) 
+                && 
+                ($scope.emailIsUnique($scope.dataModel.user.email))
+                )
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        };
+
+        $scope.canCreateUser = function() {
+            
+            var complete = true;
+            var toComplete = [
+                $scope.dataModel.user.name, 
+                $scope.dataModel.user.surname, 
+                $scope.dataModel.user.email, 
+                $scope.password.password,
+                $scope.password.confirm
+            ];
+            for (var i = 0; i < toComplete.length; i++) {
+                var x = toComplete[i];
+                if ((x === null) || (x === undefined) || (x.length === 0)) {
+                    complete = false;
+                    break;
+                }
+            }
+
+            var valid = 
+                (
+                    ($scope.userEmailIsValid())
+                    &&
+                    ($scope.passwordIsValid())
+                );
+
+            if (complete && valid) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
   	});	
