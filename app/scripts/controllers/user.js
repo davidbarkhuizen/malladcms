@@ -38,9 +38,11 @@ angular.module('mallcmsApp')
     			($scope.originalUserstate.email !== $scope.dataModel.user.email)
     			);
 
-    		console.log(changed);
-
     		return changed;
+    	};
+
+    	$scope.validatePassword = function(pwd) {
+    		console.log('validatePassword ' + pwd);
     	};
 
     	$scope.passwordIsValid = function() {
@@ -56,7 +58,6 @@ angular.module('mallcmsApp')
     				($scope.password === $scope.confirmPassword)
     			);
 
-    		console.log(isValid);
     		return isValid;
     	};
 

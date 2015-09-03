@@ -17,7 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.grid',
-    'ui.grid.pagination'
+    'ui.grid.pagination',
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -10,60 +10,76 @@
 
 <br/>
 
-<div class='one-point-five-text'>
+<form name='EditUserForm' class='one-point-five-text'>
+
+	<label>
+		<span class='form-label'>Name</span>
+		<input
+			type='text'
+			name='name'
+			ng-model="dataModel.user.name"
+			required
+			ng-disabled="dataModel.user.id !== null"
+		/>
+   		<span role='alert' class="error" ng-show="EditUserForm.name.$error.required">
+   			required!
+		</span>
+	</label>
+
+	<label>
+		<span class='form-label'>Surname</span>
+		<input
+			type='text'
+			name='surname'
+			ng-model="dataModel.user.surname"
+			required
+			ng-disabled="dataModel.user.id !== null"
+		/>
+   		<span role='alert' class="error" ng-show="EditUserForm.surname.$error.required">
+   			required!
+		</span>
+	</label>
+
+	<label>
+		<span class='form-label'>Email</span>
+		<input
+			type='text'
+			name='email'
+			ng-model="dataModel.user.email"
+			required
+		/>
+   		<span role='alert' class="error" ng-show="EditUserForm.email.$error.required">
+   			required!
+		</span>
+	</label>
+
 	<div>
-		<div>
-			Name
-		</div>
-		<div>
+		<label>
+			<span class='form-label'>Password</span>
 			<input
-				ng-model="dataModel.user.name"
-				ng-required="true"
-				ng-disabled="dataModel.user.id !== null"
-			/>
-		</div>
-
-		<div>
-			Surname
-		</div>
-		<div>
-			<input
-				ng-model="dataModel.user.surname"
-				ng-required="true"
-				ng-disabled="dataModel.user.id !== null"
-			/>
-		</div>
-
-		<div>
-			Email
-		</div>
-		<div>
-			<input
-				ng-model="dataModel.user.email"
-				ng-required="true"
-			/>
-		</div>
-	</div>
-
-	<div>
-		<div>
-			Password
-		</div>
-		<div>
-			<input
+				type='password'
+				name='password'
 				ng-model="password"
-				ng-required="(dataModel.user == null)"
+				ng-required="(dataModel.user.id == null)"
+				ui-validate='validatePassword($value)'
 			/>
-		</div>
-		<div>
-			Confirm Password
-		</div>
-		<div>
+	   		<span role='alert' class="error" ng-show="EditUserForm.password.$error.required">
+	   			required!
+   			</span>
+		</label>
+
+		<label>
+			<span class='form-label'>Confirm Password</span>
 			<input
+				type='password'
+				name='confirmPassword'
 				ng-model="confirmPassword"
-				ng-required="(dataModel.user == null)"
+				ng-required="(dataModel.user.id == null)"
 			/>
-		</div>
+	   		<span role='alert' class="error" ng-show="EditUserForm.confirmPassword.$error.required">
+	   			required!
+   			</span>
+		</label>
 	</div>
 
 	<br/>
