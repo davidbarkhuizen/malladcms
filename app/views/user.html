@@ -1,17 +1,83 @@
 
 <div class='view-header'>
 	<span ng-if='dataModel.user.id !== null'>
-		manage existing user
+		Manage Existing User
 	</span>
 	<span ng-if='dataModel.user.id === null'>
-		create new user
+		Create New User
 	</span>
 </div>
 
 <br/>
-Name {{ dataModel.user.name }}
-<br/>
-Surname {{ dataModel.user.surname }}
-<br/>
-Email {{ dataModel.user.email }}
-<br/>
+
+<div class='one-point-five-text'>
+	<div>
+		<div>
+			Name
+		</div>
+		<div>
+			<input
+				ng-model="dataModel.user.name"
+				ng-required="true"
+				ng-disabled="dataModel.user.id !== null"
+			/>
+		</div>
+
+		<div>
+			Surname
+		</div>
+		<div>
+			<input
+				ng-model="dataModel.user.surname"
+				ng-required="true"
+				ng-disabled="dataModel.user.id !== null"
+			/>
+		</div>
+
+		<div>
+			Email
+		</div>
+		<div>
+			<input
+				ng-model="dataModel.user.email"
+				ng-required="true"
+			/>
+		</div>
+	</div>
+
+	<div>
+		<div>
+			Password
+		</div>
+		<div>
+			<input
+				ng-model="password"
+				ng-required="(dataModel.user == null)"
+			/>
+		</div>
+		<div>
+			Confirm Password
+		</div>
+		<div>
+			<input
+				ng-model="confirmPassword"
+				ng-required="(dataModel.user == null)"
+			/>
+		</div>
+	</div>
+
+	<br/>
+
+	<div>
+		<div ng-show='dataModel.user.id === null'>
+			<a ng-href="">
+				<button type="button" ng-click='' ng-disabled="(newUserInfoIsCompleteAndValid() == false)" class="btn btn-primary btn-sm">Create User</button>
+			</a>
+		</div>
+		<div ng-show='dataModel.user.id !== null'>
+			<a ng-href="">
+				<button type="button" ng-click='' ng-disabled="(userHasChanged() == false)" class="btn btn-primary btn-sm">Submit Changes</button>
+			</a>
+		</div>
+	</div>
+</div>
