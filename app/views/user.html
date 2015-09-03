@@ -21,10 +21,12 @@
 			required
 			ng-disabled="dataModel.user.id !== null"
 		/>
-   		<span role='alert' class="error" ng-show="EditUserForm.name.$error.required">
+   		<div role='alert' class="error" ng-show="EditUserForm.name.$error.required">
    			required!
-		</span>
+		</div>
 	</label>
+
+	<br/>
 
 	<label>
 		<span class='form-label'>Surname</span>
@@ -35,10 +37,12 @@
 			required
 			ng-disabled="dataModel.user.id !== null"
 		/>
-   		<span role='alert' class="error" ng-show="EditUserForm.surname.$error.required">
+   		<div role='alert' class="error" ng-show="EditUserForm.surname.$error.required">
    			required!
-		</span>
+		</div>
 	</label>
+
+	<br/>
 
 	<label>
 		<span class='form-label'>Email</span>
@@ -48,10 +52,12 @@
 			ng-model="dataModel.user.email"
 			required
 		/>
-   		<span role='alert' class="error" ng-show="EditUserForm.email.$error.required">
+   		<div role='alert' class="error" ng-show="EditUserForm.email.$error.required">
    			required!
-		</span>
+		</div>
 	</label>
+
+	<br/>
 
 	<div>
 		<label>
@@ -59,27 +65,44 @@
 			<input
 				type='password'
 				name='password'
-				ng-model="password"
+				ng-model="password.password"
 				ng-required="(dataModel.user.id == null)"
-				ui-validate='validatePassword($value)'
+				ui-validate="{strongpassword : 'passwordIsStrong($value)'}"
 			/>
-	   		<span role='alert' class="error" ng-show="EditUserForm.password.$error.required">
+	   		<div role='alert' class="error" ng-show="EditUserForm.password.$error.required">
 	   			required!
-   			</span>
+   			</div>
+   			<div role='alert' class="error" ng-show="EditUserForm.password.$error.strongpassword">
+	   			the password is too weak.
+	   			it must
+	   			<ol>
+	   			<li>be at least 8 long</li>
+	   			<li>have at least 1 uppercase letter</li>
+	   			<li>have at least 1 number</li>
+	   			<li>have at least 1 special character ! " # $ %	& ' ( ) * +	, -	. /	: ;	< = > ? @ [ \ ] ^ _ ` { | } ~</li>
+	   			</ol>
+   			</div>
 		</label>
+
+		<br/>
 
 		<label>
 			<span class='form-label'>Confirm Password</span>
 			<input
 				type='password'
-				name='confirmPassword'
-				ng-model="confirmPassword"
+				name='confirmpassword'
+				ng-model="password.confirm"
 				ng-required="(dataModel.user.id == null)"
+				ui-validate="{confirmpassword : 'confirmPassword($value)'}"
 			/>
-	   		<span role='alert' class="error" ng-show="EditUserForm.confirmPassword.$error.required">
+	   		<div role='alert' class="error" ng-show="EditUserForm.confirmpassword.$error.required">
 	   			required!
-   			</span>
+   			</div>
+	   		<div role='alert' class="error" ng-show="EditUserForm.confirmpassword.$error.confirmpassword">
+	   			does not match!
+   			</div>
 		</label>
+
 	</div>
 
 	<br/>

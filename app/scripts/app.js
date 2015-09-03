@@ -18,6 +18,7 @@ angular
     'ngTouch',
     'ui.grid',
     'ui.grid.pagination',
+    'ui.directives'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -28,8 +28,10 @@ angular.module('mallcmsApp')
         	$scope.dataModel.user.email
         	);
 
-    	$scope.password = '';
-    	$scope.confirmPassword = '';
+        $scope.password = {
+            password:"",
+            confirm:""
+        };
 
     	$scope.userHasChanged = function() {
 
@@ -41,25 +43,48 @@ angular.module('mallcmsApp')
     		return changed;
     	};
 
-    	$scope.validatePassword = function(pwd) {
-    		console.log('validatePassword ' + pwd);
+    	$scope.passwordIsStrong = function(pwd) {
+
+    		if (pwd.length < 8) {
+    			return false;
+    		}
+
+    		var sets = [
+    			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    			"0123456789",
+    			"!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"
+    		];
+
+    		for (var s = 0; s < sets.length; s++) {
+    			var targetSet = sets[s];
+
+    			var hasSetMember = false;
+	    		for(var i = 0; i < targetSet.length; i++) {
+	    			if (pwd.indexOf(targetSet[i]) !== -1) {
+	    				hasSetMember = true;
+	    				break;
+	    			}
+    			}
+
+	    		if (!hasSetMember) {
+    				return false;
+	    		}
+    		}
+
+    		return true;
     	};
 
     	$scope.passwordIsValid = function() {
 
-    		var isValid =  
-    			(
-    				($scope.password !== '')
-    				&&
-    				($scope.password.length !== null)
-    				&&
-    				($scope.password.length > 0)
-    				&&
-    				($scope.password === $scope.confirmPassword)
-    			);
-
-    		return isValid;
+    		if ($scope.passwordIsStrong($scope.password.password))
+    			return true;
+    		else
+    			return false;
     	};
+
+        $scope.confirmPassword = function(passwordConfirm) {
+            return ($scope.password.password == passwordConfirm);
+        }
 
     	$scope.newUserInfoIsCompleteAndValid = function() {
 
