@@ -16,7 +16,7 @@ angular.module('mallcmsApp')
 		
 			? $scope.dataModel.user = $scope.dataModel.users.first(
 				function(x){ 
-  					return (x.id == $routeParams.userId); 
+  					return (x.id === $routeParams.userId); 
   				})
   		
   			: new User(null, '', '', '');
@@ -76,15 +76,17 @@ angular.module('mallcmsApp')
 
     	$scope.passwordIsValid = function() {
 
-    		if ($scope.passwordIsStrong($scope.password.password))
+    		if ($scope.passwordIsStrong($scope.password.password)) {
     			return true;
-    		else
+            }
+    		else {
     			return false;
+            }
     	};
 
         $scope.confirmPassword = function(passwordConfirm) {
-            return ($scope.password.password == passwordConfirm);
-        }
+            return ($scope.password.password === passwordConfirm);
+        };
 
     	$scope.newUserInfoIsCompleteAndValid = function() {
 

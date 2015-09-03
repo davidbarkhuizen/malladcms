@@ -31,4 +31,4 @@ for(var i = 0; i < 15; i++) {
 angular.module('mallcmsApp')
   .factory('DataModel', function () {
     return { users: testUsers };
-})
+});

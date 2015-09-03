@@ -1,3 +1,5 @@
+'use strict';
+
 // ----------------------------------------------------------
 // GUID
 
@@ -10,7 +12,7 @@ function guid() {
 		.replace(/[xy]/g,
 			function(c) {
     			var r = Math.random()*16|0;
-    			v = c == 'x' ? r : (r&0x3|0x8);
+    			var v = c === 'x' ? r : (r&0x3|0x8);
     			return v.toString(16);
 			}
 		);
@@ -18,8 +20,7 @@ function guid() {
 
 function suffixStaticUrlWithGuid(url) {
 	return url + "?guid=" + guid();
-};
-
+}
 
 // STRING ---------------------------------------------------------
 
@@ -30,7 +31,7 @@ if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
     return this.replace(/{(\d+)}/g, function(match, number) { 
-      return typeof args[number] != 'undefined'
+      return typeof args[number] !== 'undefined'
         ? args[number]
         : match
       ;
@@ -47,7 +48,7 @@ Object.defineProperty(Array.prototype, "remove", {
 
 		var toRetain = this.filter(function(x) { return (x !== match); });
 		this.length = 0;
-		toRetain.forEach(function(x) { that.push(x)});
+		toRetain.forEach(function(x) { that.push(x); });
 
 		return this;
     }
@@ -60,7 +61,7 @@ Object.defineProperty(Array.prototype, "removeWhere", {
 
 		var toRetain = this.filter(function(x) { return !predicate(x); });
 		this.length = 0;
-		toRetain.forEach(function(x) { that.push(x)});
+		toRetain.forEach(function(x) { that.push(x); });
 
 		return this;
     }
@@ -72,7 +73,7 @@ Object.defineProperty(Array.prototype, "first", {
 
 		var matching = this.filter(predicate); 
 		
-		return (matching.length == 0)
+		return (matching.length === 0)
 			 ? undefined
 			 : matching[0];
     }
@@ -94,8 +95,9 @@ Object.defineProperty(Array.prototype, "contains", {
 		var that = this;
 
 		for(var i = 0; i < this.length; i++) {
-			if (this[i] == match)
+			if (this[i] === match) {
 				return true;
+			}
 		}
 
 		return false;
@@ -107,9 +109,11 @@ Object.defineProperty(Array.prototype, "containsWhere", {
 	value: function(predicate) {
 		
 		for(var i in this) {
-		if (predicate(this[i]) == true)
-			return true;
+			if (predicate(this[i]) === true) { 
+				return true;
+			}
 		}
+
 		return false;
     }
 });
