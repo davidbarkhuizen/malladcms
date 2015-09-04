@@ -12,6 +12,12 @@ angular.module('mallcmsApp')
 
   	$scope.dataModel = DataModel;
 
+  	$scope.cursorClass = function() {
+  		return ($scope.dataModel.ajax === true)
+  		? 'wait'
+  		: '';
+  	};
+
   	$scope.loadUsers = function() {
 
   		var handleLoadUsersResponse = function(data, status, headers, config) {

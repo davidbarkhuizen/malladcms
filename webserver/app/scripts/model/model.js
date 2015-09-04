@@ -16,6 +16,9 @@ function User(id, name, surname, email, isAdmin) {
 }
 
 var privateModel = {
+
+	ajax : false,
+
 	user : null,
 	users : [],
 	selectedUser : null

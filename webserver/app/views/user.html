@@ -12,6 +12,10 @@
 
 <form name='userEditForm' class='one-point-five-text'>
 
+	<div class='error' ng-if='(createUpdateUserServerError !== null)'>
+		{{ createUpdateUserServerError }}
+	</div>
+
 	<label>
 		<span class='form-label'>Name</span>
 		<input
@@ -19,7 +23,7 @@
 			name='name'
 			ng-model="userEdit.name"
 			required
-			ng-disabled="userEdit.id !== null"
+			ng-disabled="(userEdit.id !== null) || dataModel.ajax"
 		/>
    		<div role='alert' class="error" ng-show="userEditForm.name.$error.required">
    			required!
@@ -35,7 +39,7 @@
 			name='surname'
 			ng-model="userEdit.surname"
 			required
-			ng-disabled="userEdit.id !== null"
+			ng-disabled="(userEdit.id !== null) || dataModel.ajax"
 		/>
    		<div role='alert' class="error" ng-show="userEditForm.surname.$error.required">
    			required!
@@ -52,6 +56,7 @@
 			ng-model="userEdit.email"
 			required
 			ui-validate="{ validemailpattern : 'emailPatternIsValid($value)', uniqueemail : 'emailIsUnique($value)' }"
+			ng-disabled='dataModel.ajax'
 		/>
    		<div role='alert' class="error" ng-show="userEditForm.email.$error.required">
    			required!
@@ -91,6 +96,7 @@
 				ng-model="password.password"
 				ng-required="((userEdit.id == null) || (password.change))"
 				ui-validate="{strongpassword : 'passwordIsStrong($value)'}"
+				ng-disabled="dataModel.ajax"
 			/>
 	   		<div role='alert' class="error" ng-show="userEditForm.password.$error.required">
 	   			required!
@@ -117,6 +123,7 @@
 				ng-model="password.confirm"
 				ng-required="((userEdit.id == null) || (password.change))"
 				ui-validate="{confirmpassword : 'confirmPassword($value)'}"
+				ng-disabled="dataModel.ajax"
 			/>
 	   		<div role='alert' class="error" ng-show="userEditForm.confirmpassword.$error.required">
 	   			required!
@@ -132,7 +139,7 @@
 	<div>
 		<div ng-show='userEdit.id === null'>
 			<a ng-href="">
-				<button type="button" ng-click='' ng-disabled="!canCreateUser()" class="btn btn-primary btn-sm">Create User</button>
+				<button type="button" ng-click='createUser()' ng-disabled="!canCreateUser() || dataModel.ajax" class="btn btn-primary btn-sm">Create User</button>
 			</a>
 		</div>
 		<div ng-show='userEdit.id !== null'>

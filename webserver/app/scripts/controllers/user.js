@@ -8,7 +8,7 @@
  * Controller of the mallcmsApp 
  */  
 angular.module('mallcmsApp')
-	.controller('UserCtrl', function ($scope, $routeParams, DataModel) {
+	.controller('UserCtrl', function ($scope, $routeParams, DataModel, $http, $location) {
 
 		$scope.dataModel = DataModel;
 
@@ -39,6 +39,8 @@ angular.module('mallcmsApp')
             password:"",
             confirm:""
         };
+
+        $scope.createUpdateUserServerError = null;
 
         $scope.toggleChangePassword = function() {
             $scope.password.change = (!$scope.password.change);
@@ -211,5 +213,35 @@ angular.module('mallcmsApp')
             else {
                 return false;
             }
+        };
+
+        $scope.createUser = function() {
+
+            var userToCreate = $scope.userEdit;
+
+            var handleCreateUserResponse = function(data, status, headers, config) {
+                $scope.dataModel.ajax = false;
+
+                //$scope.dataModel.users.push();                
+            };
+
+            var handleCreateUserError = function(data, status, headers, config) {
+                $scope.dataModel.ajax = false;
+
+                // reload users
+
+                window.alert('New user created:\n{0}'.replace("{0}", userToCreate.email)); 
+                $location.path('/users');
+            };
+
+            $scope.dataModel.ajax = true;
+
+            $http({
+                url: siteConfig.apiUrl("user"),
+                method: "POST",
+                data: userToCreate
+            })
+            .success(handleCreateUserResponse)
+            .error(handleCreateUserError);
         };
   	});	
