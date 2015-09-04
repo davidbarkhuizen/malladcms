@@ -11,7 +11,13 @@ function User(id, name, surname, email, isAdmin) {
 	this.isAdmin = isAdmin;
 }
 
+var privateModel = {
+	user : null,
+	users : [],
+	selectedUser : null
+};
+
 angular.module('mallcmsApp')
   .factory('DataModel', function () {
-    return { users: test.genRandomTestUsers(15) };
+    return privateModel;
 });
