@@ -8,5 +8,8 @@
  * Controller of the mallcmsApp
  */
 angular.module('mallcmsApp')
-  .controller('MainCtrl', function () {
+  .controller('MainCtrl', function ($scope, $http, DataModel) {
+
+
+
   });

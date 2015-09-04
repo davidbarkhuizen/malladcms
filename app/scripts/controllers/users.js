@@ -9,7 +9,7 @@
  */
 angular.module('mallcmsApp')
   .controller('UsersCtrl', function ($scope, DataModel) {
-    
+
   	$scope.dataModel = DataModel;
 
     $scope.manageUser = function(id) {

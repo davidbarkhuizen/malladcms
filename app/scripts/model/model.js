@@ -1,6 +1,6 @@
 'use strict';
 
-function User(id, name, surname, email) {
+function User(id, name, surname, email, isAdmin) {
 
 	var that = this;
 
@@ -8,27 +8,10 @@ function User(id, name, surname, email) {
 	this.name = name;
 	this.surname = surname;
 	this.email = email;
-}
-
-function randomString(length) {
-	return Math.random().toString(36).substring(length);
-}
-
-function genRandomUser(id) {
-
-	var name = randomString(10);
-	var surname = randomString(10);
-	var email = randomString(10) + '@' + randomString(10) + '.' + randomString(3);
-
-	return new User(id, name, surname, email);
-}
-
-var testUsers = [];
-for(var i = 0; i < 15; i++) {
-	testUsers.push(genRandomUser(i));
+	this.isAdmin = isAdmin;
 }
 
 angular.module('mallcmsApp')
   .factory('DataModel', function () {
-    return { users: testUsers };
+    return { users: test.genRandomTestUsers(15) };
 });

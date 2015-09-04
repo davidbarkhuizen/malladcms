@@ -1,9 +1,9 @@
 
 <div class='view-header'>
-	<span ng-if='dataModel.user.id !== null'>
+	<span ng-if='dataModel.selectedUser.id !== null'>
 		Manage Existing User
 	</span>
-	<span ng-if='dataModel.user.id === null'>
+	<span ng-if='dataModel.selectedUser.id === null'>
 		Create New User
 	</span>
 </div>
@@ -17,9 +17,9 @@
 		<input
 			type='text'
 			name='name'
-			ng-model="dataModel.user.name"
+			ng-model="dataModel.selectedUser.name"
 			required
-			ng-disabled="dataModel.user.id !== null"
+			ng-disabled="dataModel.selectedUser.id !== null"
 		/>
    		<div role='alert' class="error" ng-show="EditUserForm.name.$error.required">
    			required!
@@ -33,9 +33,9 @@
 		<input
 			type='text'
 			name='surname'
-			ng-model="dataModel.user.surname"
+			ng-model="dataModel.selectedUser.surname"
 			required
-			ng-disabled="dataModel.user.id !== null"
+			ng-disabled="dataModel.selectedUser.id !== null"
 		/>
    		<div role='alert' class="error" ng-show="EditUserForm.surname.$error.required">
    			required!
@@ -49,7 +49,7 @@
 		<input
 			type='text'
 			name='email'
-			ng-model="dataModel.user.email"
+			ng-model="dataModel.selectedUser.email"
 			required
 			ui-validate="{ validemailpattern : 'emailPatternIsValid($value)', uniqueemail : 'emailIsUnique($value)' }"
 		/>
@@ -66,14 +66,30 @@
 
 	<br/>
 
-	<div>
+	<div ng-show='((dataModel.selectedUser.id !== null) && (password.change == false))'>
+		<label>
+			<span class='form-label'>Password</span>
+			<a ng-href="">
+				<button type="button" ng-click='toggleChangePassword()' class="btn btn-warning btn-sm">Change Password</button>
+			</a>
+		</label>
+	</div>
+	<div ng-show='(password.change == true)'>
+		<label>
+			<span class='form-label'></span>
+			<a ng-href="">
+				<button type="button" ng-click='toggleChangePassword()' class="btn btn-success btn-sm">Undo Password Changes</button>
+			</a>
+		</label>
+	</div>
+	<div ng-show='((dataModel.selectedUser.id == null) || (password.change == true))'>
 		<label>
 			<span class='form-label'>Password</span>
 			<input
 				type='password'
 				name='password'
 				ng-model="password.password"
-				ng-required="(dataModel.user.id == null)"
+				ng-required="((dataModel.selectedUser.id == null) || (password.change))"
 				ui-validate="{strongpassword : 'passwordIsStrong($value)'}"
 			/>
 	   		<div role='alert' class="error" ng-show="EditUserForm.password.$error.required">
@@ -99,7 +115,7 @@
 				type='password'
 				name='confirmpassword'
 				ng-model="password.confirm"
-				ng-required="(dataModel.user.id == null)"
+				ng-required="((dataModel.selectedUser.id == null) || (password.change))"
 				ui-validate="{confirmpassword : 'confirmPassword($value)'}"
 			/>
 	   		<div role='alert' class="error" ng-show="EditUserForm.confirmpassword.$error.required">
@@ -109,20 +125,22 @@
 	   			does not match!
    			</div>
 		</label>
-
 	</div>
 
 	<br/>
 
 	<div>
-		<div ng-show='dataModel.user.id === null'>
+		<div ng-show='dataModel.selectedUser.id === null'>
 			<a ng-href="">
 				<button type="button" ng-click='' ng-disabled="!canCreateUser()" class="btn btn-primary btn-sm">Create User</button>
 			</a>
 		</div>
-		<div ng-show='dataModel.user.id !== null'>
+		<div ng-show='dataModel.selectedUser.id !== null'>
+			<a ng-href="#/users">
+				<button type="button" ng-disabled="((userHasChanged() == false) || (!userChangesAreValid()))" class="btn btn-success btn-sm">Cancel</button>
+			</a>
 			<a ng-href="">
-				<button type="button" ng-click='' ng-disabled="(userHasChanged() == false)" class="btn btn-primary btn-sm">Submit Changes</button>
+				<button type="button" ng-click='' ng-disabled="((userHasChanged() == false) || (!userChangesAreValid()))" class="btn btn-danger btn-sm">Submit Changes</button>
 			</a>
 		</div>
 	</div>

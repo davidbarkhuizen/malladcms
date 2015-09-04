@@ -5,51 +5,85 @@
  * @name mallcmsApp.controller:UserCtrl
  * @description
  * # UserCtrl
- * Controller of the mallcmsApp
+ * Controller of the mallcmsApp 
  */
 angular.module('mallcmsApp')
 	.controller('UserCtrl', function ($scope, $routeParams, DataModel) {
 
-        console.log('$routeParams.userId');
-        console.log($routeParams.userId);
-
 		$scope.dataModel = DataModel;
 
-		$scope.dataModel.user = ($routeParams.userId !== 'new')
+		$scope.dataModel.selectedUser = ($routeParams.userId !== 'new')
 		
-			? $scope.dataModel.user = $scope.dataModel.users.first(
+			? $scope.dataModel.selectedUser = $scope.dataModel.users.first(
 				function(x){ 
   					return (x.id === parseInt($routeParams.userId)); 
   				})
   		
-  			: new User(null, '', '', '');
-
-        console.log('$scope.dataModel.user');
-        console.log($scope.dataModel.user);
+  			: new User(null, '', '', '', false);
 
     	$scope.originalUserstate = new User(
-      		$scope.dataModel.user.id,
-        	$scope.dataModel.user.name,
-        	$scope.dataModel.user.surname,
-        	$scope.dataModel.user.email
+      		$scope.dataModel.selectedUser.id,
+        	$scope.dataModel.selectedUser.name,
+        	$scope.dataModel.selectedUser.surname,
+        	$scope.dataModel.selectedUser.email,
+            $scope.dataModel.selectedUser.isAdmin
         	);
 
         $scope.password = {
+            change:false,
             password:"",
             confirm:""
+        };
+
+        $scope.toggleChangePassword = function() {
+            $scope.password.change = (!$scope.password.change);
         };
 
     	$scope.userHasChanged = function() {
 
     		var changed =
                 (
-    			($scope.originalUserstate.email !== $scope.dataModel.user.email)
+    			($scope.originalUserstate.email !== $scope.dataModel.selectedUser.email)
+                ||
+                ($scope.password.change)
     			);
 
-    		return changed;
+    		if (changed) {
+                return true;
+            }
+            else {
+                return false;
+            }
     	};
 
+        $scope.userChangesAreValid = function() {
+
+            var passwordOK = 
+                (
+                    (!$scope.password.change) 
+                    ||
+                    ($scope.passwordIsValid())
+                );
+
+            var emailOK = 
+                (
+                    ($scope.user.email === $scope.originalUserstate.email) 
+                    ||
+                    ($scope.userEmailIsValid())
+                ); 
+
+            if (passwordOK && emailOK) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
+
     	$scope.passwordIsStrong = function(pwd) {
+
+            if ((pwd === null) || (pwd === undefined) || (pwd.length === 0))
+                return false;
 
     		if (pwd.length < 8) {
     			return false;
@@ -82,11 +116,10 @@ angular.module('mallcmsApp')
 
     	$scope.passwordIsValid = function() {
 
-    		if (
-                    ($scope.passwordIsStrong($scope.password.password))
-                    && 
-                    ($scope.password.password === $scope.password.confirm)
-                ) {
+            var isStrong = $scope.passwordIsStrong($scope.password.password);
+            var isConfirmed = ($scope.password.password === $scope.password.confirm);
+
+    		if (isStrong && isConfirmed) {
     			return true;
             }
     		else {
@@ -113,7 +146,7 @@ angular.module('mallcmsApp')
 
                 var user = $scope.dataModel.users[i]; 
 
-                if (user.id == $scope.dataModel.user.id) {
+                if (user.id == $scope.dataModel.selectedUser.id) {
                     continue;
                 }
 
@@ -128,9 +161,9 @@ angular.module('mallcmsApp')
         $scope.userEmailIsValid = function() {
 
             if (
-                ($scope.emailPatternIsValid($scope.dataModel.user.email)) 
+                ($scope.emailPatternIsValid($scope.dataModel.selectedUser.email)) 
                 && 
-                ($scope.emailIsUnique($scope.dataModel.user.email))
+                ($scope.emailIsUnique($scope.dataModel.selectedUser.email))
                 )
             {
                 return true;
@@ -145,9 +178,9 @@ angular.module('mallcmsApp')
             
             var complete = true;
             var toComplete = [
-                $scope.dataModel.user.name, 
-                $scope.dataModel.user.surname, 
-                $scope.dataModel.user.email, 
+                $scope.dataModel.selectedUser.name, 
+                $scope.dataModel.selectedUser.surname, 
+                $scope.dataModel.selectedUser.email, 
                 $scope.password.password,
                 $scope.password.confirm
             ];

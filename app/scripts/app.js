@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular
+mallcmsAppModule = angular
   .module('mallcmsApp', [
     'ngAnimate',
     'ngCookies',
