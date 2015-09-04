@@ -8,7 +8,7 @@
  * Controller of the mallcmsApp
  */
 angular.module('mallcmsApp')
-  .controller('ModelCtrl', function ($scope, $http, DataModel) {
+  .controller('ModelCtrl', function ($scope, $http, DataModel, $rootScope) {
 
   	$scope.dataModel = DataModel;
 
@@ -18,6 +18,7 @@ angular.module('mallcmsApp')
   		: '';
   	};
 
+  	$rootScope.$on(Event.LoadUsers, function(evt, data){ $scope.loadUsers(); })
   	$scope.loadUsers = function() {
 
   		var handleLoadUsersResponse = function(data, status, headers, config) {
@@ -34,9 +35,14 @@ angular.module('mallcmsApp')
 
 	  	var handleLoadUsersError = function(data, status, headers, config) {
 
-	  		var data = { list : test.users };
+	  		// MIMIC SERVER
+	  		//
+	  		var data = { list : [] };
+	  		test.users.forEach(function(x){ data.list.push(x.clone()); });
 			handleLoadUsersResponse(data);
+
 			// redirect to MVC login page
+			// RETRY, THEN FAIL
 	  	};
 
 	  	$http({
@@ -81,8 +87,4 @@ angular.module('mallcmsApp')
   	if ($scope.dataModel.user === null) {
   		$scope.init();
   	}
-
-  	// 1 = get user - need to know whether we are a system user or an admin user
-  	// A = admin user => fetch list of users for management
-  	// B = system user => fetch list of campaigns 
   });

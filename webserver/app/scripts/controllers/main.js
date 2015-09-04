@@ -10,6 +10,4 @@
 angular.module('mallcmsApp')
   .controller('MainCtrl', function ($scope, $http, DataModel) {
 
-
-
   });

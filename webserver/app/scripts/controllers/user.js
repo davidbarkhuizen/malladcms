@@ -8,7 +8,7 @@
  * Controller of the mallcmsApp 
  */  
 angular.module('mallcmsApp')
-	.controller('UserCtrl', function ($scope, $routeParams, DataModel, $http, $location) {
+	.controller('UserCtrl', function ($scope, $routeParams, DataModel, $http, $location, $rootScope) {
 
 		$scope.dataModel = DataModel;
 
@@ -220,18 +220,19 @@ angular.module('mallcmsApp')
             var userToCreate = $scope.userEdit;
 
             var handleCreateUserResponse = function(data, status, headers, config) {
-                $scope.dataModel.ajax = false;
+                $scope.dataModel.ajax = false; 
 
-                //$scope.dataModel.users.push();                
+                // reload users
+                $rootScope.$emit(Event.LoadUsers);
+                window.alert('New user created:\n{0}'.replace("{0}", userToCreate.email)); 
+                $location.path('/users');
             };
 
             var handleCreateUserError = function(data, status, headers, config) {
                 $scope.dataModel.ajax = false;
 
-                // reload users
-
-                window.alert('New user created:\n{0}'.replace("{0}", userToCreate.email)); 
-                $location.path('/users');
+                test.users.push(userToCreate);
+                handleCreateUserResponse({}, 200);
             };
 
             $scope.dataModel.ajax = true;
