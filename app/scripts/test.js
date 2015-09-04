@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var test = {
 
@@ -22,12 +22,17 @@ var test = {
 		for(var i = 0; i < count; i++) {
 
 			var testUser = test.genRandomUser(i);
-			if (i == 0)
+			if (i == 0) {
 				testUser.isAdmin = true;
+			}
 
 			testUsers.push(testUser);
 		}
 
 		return testUsers;
-	}
+	},
+
+	users : []
 };
+
+test.users = test.genRandomTestUsers(15);

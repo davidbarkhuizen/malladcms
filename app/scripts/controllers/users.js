@@ -12,16 +12,10 @@ angular.module('mallcmsApp')
 
   	$scope.dataModel = DataModel;
 
-    $scope.manageUser = function(id) {
-    	console.log('manageUser ' + id);
-    };
-
     // -----------------------------------------
 
 	var buttonTemplate = '<a ng-href="#/user/{{row.entity.id}}" style="display:table-cell;vertical-align:middle;"><button type="button" class="btn btn-primary btn-sm">{0}</button></a>'
 		.replace('{0}', 'Manage');
-
-	// <a class="btn-primary btn-md" style="" href="#" title="manage user" ng-click="grid.appScope.manageUser(row.id);">manage</a>
 
 	var manageCellTemplate = '<div style="text-align:center;height:100%;width:100%;display:table;">{0}</div>'
 		.replace('{0}', buttonTemplate);

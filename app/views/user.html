@@ -1,27 +1,27 @@
 
 <div class='view-header'>
-	<span ng-if='dataModel.selectedUser.id !== null'>
+	<span ng-if='userEdit.id !== null'>
 		Manage Existing User
 	</span>
-	<span ng-if='dataModel.selectedUser.id === null'>
+	<span ng-if='userEdit.id === null'>
 		Create New User
 	</span>
 </div>
 
 <br/>
 
-<form name='EditUserForm' class='one-point-five-text'>
+<form name='userEditForm' class='one-point-five-text'>
 
 	<label>
 		<span class='form-label'>Name</span>
 		<input
 			type='text'
 			name='name'
-			ng-model="dataModel.selectedUser.name"
+			ng-model="userEdit.name"
 			required
-			ng-disabled="dataModel.selectedUser.id !== null"
+			ng-disabled="userEdit.id !== null"
 		/>
-   		<div role='alert' class="error" ng-show="EditUserForm.name.$error.required">
+   		<div role='alert' class="error" ng-show="userEditForm.name.$error.required">
    			required!
 		</div>
 	</label>
@@ -33,11 +33,11 @@
 		<input
 			type='text'
 			name='surname'
-			ng-model="dataModel.selectedUser.surname"
+			ng-model="userEdit.surname"
 			required
-			ng-disabled="dataModel.selectedUser.id !== null"
+			ng-disabled="userEdit.id !== null"
 		/>
-   		<div role='alert' class="error" ng-show="EditUserForm.surname.$error.required">
+   		<div role='alert' class="error" ng-show="userEditForm.surname.$error.required">
    			required!
 		</div>
 	</label>
@@ -49,24 +49,24 @@
 		<input
 			type='text'
 			name='email'
-			ng-model="dataModel.selectedUser.email"
+			ng-model="userEdit.email"
 			required
 			ui-validate="{ validemailpattern : 'emailPatternIsValid($value)', uniqueemail : 'emailIsUnique($value)' }"
 		/>
-   		<div role='alert' class="error" ng-show="EditUserForm.email.$error.required">
+   		<div role='alert' class="error" ng-show="userEditForm.email.$error.required">
    			required!
 		</div>
-		<div role='alert' class="error" ng-show="EditUserForm.email.$error.validemailpattern">
+		<div role='alert' class="error" ng-show="userEditForm.email.$error.validemailpattern">
    			not a valid email!
 		</div>
-		<div role='alert' class="error" ng-show="EditUserForm.email.$error.uniqueemail">
+		<div role='alert' class="error" ng-show="userEditForm.email.$error.uniqueemail">
    			this email is already in use!
 		</div>
 	</label>
 
 	<br/>
 
-	<div ng-show='((dataModel.selectedUser.id !== null) && (password.change == false))'>
+	<div ng-show='((userEdit.id !== null) && (password.change == false))'>
 		<label>
 			<span class='form-label'>Password</span>
 			<a ng-href="">
@@ -82,20 +82,20 @@
 			</a>
 		</label>
 	</div>
-	<div ng-show='((dataModel.selectedUser.id == null) || (password.change == true))'>
+	<div ng-show='((userEdit.id == null) || (password.change == true))'>
 		<label>
 			<span class='form-label'>Password</span>
 			<input
 				type='password'
 				name='password'
 				ng-model="password.password"
-				ng-required="((dataModel.selectedUser.id == null) || (password.change))"
+				ng-required="((userEdit.id == null) || (password.change))"
 				ui-validate="{strongpassword : 'passwordIsStrong($value)'}"
 			/>
-	   		<div role='alert' class="error" ng-show="EditUserForm.password.$error.required">
+	   		<div role='alert' class="error" ng-show="userEditForm.password.$error.required">
 	   			required!
    			</div>
-   			<div role='alert' class="error" ng-show="EditUserForm.password.$error.strongpassword">
+   			<div role='alert' class="error" ng-show="userEditForm.password.$error.strongpassword">
 	   			the password is too weak.
 	   			it must
 	   			<ol>
@@ -115,29 +115,29 @@
 				type='password'
 				name='confirmpassword'
 				ng-model="password.confirm"
-				ng-required="((dataModel.selectedUser.id == null) || (password.change))"
+				ng-required="((userEdit.id == null) || (password.change))"
 				ui-validate="{confirmpassword : 'confirmPassword($value)'}"
 			/>
-	   		<div role='alert' class="error" ng-show="EditUserForm.confirmpassword.$error.required">
+	   		<div role='alert' class="error" ng-show="userEditForm.confirmpassword.$error.required">
 	   			required!
    			</div>
-	   		<div role='alert' class="error" ng-show="EditUserForm.confirmpassword.$error.confirmpassword">
+	   		<div role='alert' class="error" ng-show="userEditForm.confirmpassword.$error.confirmpassword">
 	   			does not match!
    			</div>
 		</label>
 	</div>
 
 	<br/>
-
+ 
 	<div>
-		<div ng-show='dataModel.selectedUser.id === null'>
+		<div ng-show='userEdit.id === null'>
 			<a ng-href="">
 				<button type="button" ng-click='' ng-disabled="!canCreateUser()" class="btn btn-primary btn-sm">Create User</button>
 			</a>
 		</div>
-		<div ng-show='dataModel.selectedUser.id !== null'>
+		<div ng-show='userEdit.id !== null'>
 			<a ng-href="#/users">
-				<button type="button" ng-disabled="((userHasChanged() == false) || (!userChangesAreValid()))" class="btn btn-success btn-sm">Cancel</button>
+				<button type="button" class="btn btn-success btn-sm">Cancel</button>
 			</a>
 			<a ng-href="">
 				<button type="button" ng-click='' ng-disabled="((userHasChanged() == false) || (!userChangesAreValid()))" class="btn btn-danger btn-sm">Submit Changes</button>

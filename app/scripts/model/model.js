@@ -9,6 +9,10 @@ function User(id, name, surname, email, isAdmin) {
 	this.surname = surname;
 	this.email = email;
 	this.isAdmin = isAdmin;
+
+	this.clone = function() {
+		return new User(that.id, that.name, that.surname, that.email, that.isAdmin);
+	};
 }
 
 var privateModel = {
