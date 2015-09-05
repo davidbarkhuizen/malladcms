@@ -35,41 +35,46 @@ angular.module('mallcmsApp')
 		paginationPageSizes: [10],
     	paginationPageSize: 10,
 
-    	// code, description, isActive, startDate, endDate
+    	enableSorting: true,
+    	enableFiltering: true,
 
     	columnDefs: [
 			{ 	
 				field: 'code', 
-				enableSorting: false, 
+				enableSorting: true, 
 				enableHiding: false,
 				headerCellClass: 'center',
 				cellTemplate: $scope.verticallyCenteredCellTemplate('{{ row.entity.code }}')
 			},
 			{ 	
 				field: 'description', 
-				enableSorting: false, 
+				enableSorting: true, 
 				enableHiding: false,
 				headerCellClass: 'center',
 				cellTemplate: $scope.verticallyCenteredCellTemplate('{{ row.entity.description }}')
 			},
 			{ 	
 				field: 'isActive', 
-				enableSorting: false, 
+				name: 'Active',
+				enableSorting: true, 
 				enableHiding: false,
+				enableFiltering: false,
 				headerCellClass: 'center',
-				cellTemplate: $scope.verticallyCenteredCellTemplate('{{ row.entity.isActive }}')
+				cellTemplate: $scope.verticallyCenteredCellTemplate("{{ row.entity.isActive ? 'Yes' : 'No' }}")
 			},
 			{ 	
 				field: 'startDate', 
-				enableSorting: false, 
+				enableSorting: true, 
 				enableHiding: false,
+				enableFiltering : false,
 				headerCellClass: 'center',
 				cellTemplate: $scope.verticallyCenteredCellTemplate('{{ row.entity.startDateString() }}')
 			},
 			{ 	
 				field: 'endDate', 
-				enableSorting: false, 
+				enableSorting: true, 
 				enableHiding: false,
+				enableFiltering : false,
 				headerCellClass: 'center',
 				cellTemplate: $scope.verticallyCenteredCellTemplate('{{ row.entity.endDateString() }}')
 			},
