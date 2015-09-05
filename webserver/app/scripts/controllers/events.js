@@ -1,5 +1,6 @@
 'use strict';
 
 var Event = {
-	LoadUsers : guid()
+	LoadUsers : guid(),
+	LoadCampaigns : guid()
 };

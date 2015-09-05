@@ -39,7 +39,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Campaigns <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Create New Campaign</a></li>
-              <li><a href="#">Manage Existing Campaign</a></li>
+              <li><a href="#/campaigns">Manage Existing Campaign</a></li>
             </ul>
           </li>
           <li ng-if='(dataModel.user.isAdmin)' class="dropdown">
@@ -97,10 +97,11 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/model/model.js"></script>
     <script src="scripts/controllers/events.js"></script>
+    <script src="scripts/controllers/model.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/users.js"></script>
     <script src="scripts/controllers/user.js"></script>
-    <script src="scripts/controllers/model.js"></script>
+    <script src="scripts/controllers/campaigns.js"></script>
     <script src="scripts/test.js"></script>
     <!-- endbuild -->
 </body>

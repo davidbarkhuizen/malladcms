@@ -1,20 +1,22 @@
 <div>
 	<div class='view-header'>
-		Manage System Users
+		Manage Media Campaigns
 	</div>
 
 	<br/>
 
 	<div>
 		<a ng-href="#/user/new">
-			<button type="button" class="btn btn-primary btn-sm">Create New User</button>
+			<button type="button" class="btn btn-primary btn-sm">
+				Create New Campaign
+			</button>
 		</a>
 	</div>
 
 	<br/>
 
 	<div
-		ui-grid="usersGridOptions"
+		ui-grid="campaignsGridOptions"
 		ui-grid-pagination
 		style='width:100%;height:100%;'	
 	></div>

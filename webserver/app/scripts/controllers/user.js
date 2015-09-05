@@ -243,7 +243,7 @@ angular.module('mallcmsApp')
             $scope.dataModel.ajax = true;
 
             $http({
-                url: siteConfig.apiUrl("user"),
+                url: siteConfig.apiUrl(siteConfig.api.user),
                 method: "POST",
                 data: userToCreate
             })
@@ -277,7 +277,7 @@ angular.module('mallcmsApp')
             $scope.dataModel.ajax = true;
 
             $http({
-                url: siteConfig.apiUrl("user"),
+                url: siteConfig.apiUrl(siteConfig.api.user),
                 method: "POST",
                 data: userToUpdate
             })

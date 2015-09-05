@@ -117,3 +117,11 @@ Object.defineProperty(Array.prototype, "containsWhere", {
 		return false;
     }
 });
+
+// DATE-TIME ---------------------------------------------------------
+
+function dateToShortString(d) {
+
+	var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	return (d.getDay() + 1).toString() + '-' + month[d.getMonth()] + '-' + (d.getYear() + 1900).toString();
+};

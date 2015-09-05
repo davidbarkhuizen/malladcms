@@ -37,6 +37,11 @@ angular
         controller: 'UserCtrl',
         controllerAs: 'user'
       })
+      .when('/campaigns', {
+        templateUrl: 'views/campaigns.html',
+        controller: 'CampaignsCtrl',
+        controllerAs: 'campaigns'
+      })
       .otherwise({
         redirectTo: '/'
       });

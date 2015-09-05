@@ -23,7 +23,7 @@ var test = {
 
 			var testUser = test.genRandomUser(i);
 			if (i == 0) {
-				testUser.isAdmin = true;
+				// testUser.isAdmin = true;
 			}
 
 			testUsers.push(testUser);
@@ -32,7 +32,39 @@ var test = {
 		return testUsers;
 	},
 
-	users : []
+	genRandomCampaign: function(id) {
+
+		var id = id;
+		var code = test.randomString(5);
+		var description = test.randomString(10);
+		var isActive = true;
+
+		var startDate = new Date();
+		startDate.setDate(startDate.getDate() - Math.floor((Math.random() * 100) + 1));
+
+		var endDate = new Date();
+		endDate.setDate(endDate.getDate() + Math.floor((Math.random() * 100) + 1));
+
+		return new Campaign(id, code, description, isActive, startDate, endDate);
+	},
+
+	genRandomTestCampaigns: function(count) {
+
+		var testCampaigns = [];
+		for(var i = 0; i < count; i++) {
+
+			var testCampaign = test.genRandomCampaign(i);
+			testCampaigns.push(testCampaign);
+		}
+
+		return testCampaigns;
+	},
+
+
+	users : [],
+	campaigns : [],
+	campaignSummaries : []
 };
 
 test.users = test.genRandomTestUsers(15);
+test.campaigns = test.genRandomTestCampaigns(15);

@@ -5,12 +5,14 @@ var siteConfig = {
 	siteRoot : "/",
 
 	api : {
-		"user" : "user",
-		"users" : "users"
+		user : "user",
+		users : "users",
+		campaigns : "campaigns",
+		campaignSummaries : "campaignsummaries"
 	},
 
-	apiUrl : function (api) {
-		return siteConfig.siteRoot + siteConfig.api[api] + "/";
+	apiUrl : function (apiToken) {
+		return siteConfig.siteRoot + apiToken + "/";
 	}
 };
 

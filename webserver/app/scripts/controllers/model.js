@@ -33,7 +33,7 @@ angular.module('mallcmsApp')
   			}
 
   			$scope.dataModel.user = $scope.dataModel.users
-  				.first(function(x){ return (x.id == scope.dataModel.user);});
+  				.first(function(x){ return (x.id == $scope.dataModel.user);});
 	  	};
 
 	  	var handleLoadUsersError = function(data, status, headers, config) {
@@ -49,12 +49,45 @@ angular.module('mallcmsApp')
 	  	};
 
 	  	$http({
-		    url: siteConfig.apiUrl("users"),
+		    url: siteConfig.apiUrl(siteConfig.api.users),
 		    method: "GET",
 		    params: { "id" : null }
 		})
 		.success(handleLoadUsersResponse)
 		.error(handleLoadUsersError);
+  	};
+
+  	$rootScope.$on(Event.LoadCampaignSummaries, function(evt, data){ $scope.loadCampaignSummaries(); })
+  	$scope.loadCampaignSummaries = function() {
+
+  		var handleLoadCampaignSummariesResponse = function(data, status, headers, config) {
+
+  			$scope.dataModel.campaignSummaries.length = 0;
+
+  			for(var i = 0; i < data.list.length; i++) {
+  				var dto = data.list[i];
+
+  				var campaignSummary = new CampaignSummary(dto.id, dto.code, dto.description, dto.isActive, dto.startDate, dto.endDate);
+	  			$scope.dataModel.campaignSummaries.push(campaignSummary);
+  			}
+	  	};
+
+	  	var handleLoadCampaignSummariesError = function(data, status, headers, config) {
+
+	  		// MIMIC SERVER
+	  		//
+	  		var data = { list : [] };
+	  		test.campaigns.forEach(function(x){ data.list.push(x.genSummary()); });
+			handleLoadCampaignSummariesResponse(data);
+	  	};
+
+	  	$http({
+		    url: siteConfig.apiUrl(siteConfig.api.campaignSummaries),
+		    method: "GET",
+		    params: { "id" : null }
+		})
+		.success(handleLoadCampaignSummariesResponse)
+		.error(handleLoadCampaignSummariesError);
   	};
 
   	$scope.init = function() {
@@ -68,7 +101,7 @@ angular.module('mallcmsApp')
 	  			$scope.loadUsers();
 	  		}
 	  		else {
-	  			// load campaigns
+	  			$scope.loadCampaignSummaries();
 	  		}
 	  	};
 
@@ -79,7 +112,7 @@ angular.module('mallcmsApp')
 	  	};
 
 	  	$http({
-		    url: siteConfig.apiUrl("user"),
+		    url: siteConfig.apiUrl(siteConfig.api.user),
 		    method: "GET",
 		    params: { "id" : null }
 		})
