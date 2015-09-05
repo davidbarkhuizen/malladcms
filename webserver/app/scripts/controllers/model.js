@@ -31,6 +31,9 @@ angular.module('mallcmsApp')
   				var user = new User(userData.id, userData.name, userData.surname, userData.email, userData.isAdmin);
 	  			$scope.dataModel.users.push(user);
   			}
+
+  			$scope.dataModel.user = $scope.dataModel.users
+  				.first(function(x){ return (x.id == scope.dataModel.user);});
 	  	};
 
 	  	var handleLoadUsersError = function(data, status, headers, config) {

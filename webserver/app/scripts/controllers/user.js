@@ -44,6 +44,9 @@ angular.module('mallcmsApp')
 
         $scope.toggleChangePassword = function() {
             $scope.password.change = (!$scope.password.change);
+
+            $scope.password.password = '';
+            $scope.password.confirm = '';
         };
 
     	$scope.userHasChanged = function() {
@@ -231,6 +234,8 @@ angular.module('mallcmsApp')
             var handleCreateUserError = function(data, status, headers, config) {
                 $scope.dataModel.ajax = false;
 
+                // MIMIC SERVER
+                //
                 test.users.push(userToCreate);
                 handleCreateUserResponse({}, 200);
             };
@@ -244,5 +249,39 @@ angular.module('mallcmsApp')
             })
             .success(handleCreateUserResponse)
             .error(handleCreateUserError);
+        };
+
+        $scope.updateUser = function() {
+
+            var userToUpdate = $scope.userEdit;
+
+            var handleUpdateUserResponse = function(data, status, headers, config) {
+                $scope.dataModel.ajax = false; 
+
+                $rootScope.$emit(Event.LoadUsers);
+                window.alert('Existing user updated:\n{0}'.replace("{0}", userToUpdate.email)); 
+                $location.path('/users');
+            };
+
+            var handleUpdateUserError = function(data, status, headers, config) {
+                $scope.dataModel.ajax = false;
+
+                // MIMIC SERVER
+                //
+                var original = test.users.first(function(x){ return (x.id === userToUpdate.id);});
+                var originalIdx = test.users.indexOf(original);
+                test.users.splice(originalIdx, 1, userToUpdate);
+                handleUpdateUserResponse({}, 200);
+            };
+
+            $scope.dataModel.ajax = true;
+
+            $http({
+                url: siteConfig.apiUrl("user"),
+                method: "POST",
+                data: userToUpdate
+            })
+            .success(handleUpdateUserResponse)
+            .error(handleUpdateUserError);
         };
   	});	
