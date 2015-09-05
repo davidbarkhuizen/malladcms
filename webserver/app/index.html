@@ -35,18 +35,18 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a ng-href="#/">Home</a></li>
-          <li ng-if='(!dataModel.user.isAdmin)' class="dropdown">
+          <li ng-if='(dataModel.user.isAdmin == false)' class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Campaigns <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Create New Campaign</a></li>
-              <li><a href="#/campaigns">Manage Existing Campaign</a></li>
+              <li><a href="#/campaign/new">Create New Campaign</a></li>
+              <li><a href="#/campaigns">Manage Campaigns</a></li>
             </ul>
           </li>
-          <li ng-if='(dataModel.user.isAdmin)' class="dropdown">
+          <li ng-if='(dataModel.user.isAdmin == true)' class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a ng-href="#/users">Manage Users</a></li>
               <li><a ng-href="#/user/new">Create New User</a></li>
+              <li><a ng-href="#/users">Manage Users</a></li>
             </ul>
           </li>
         </ul>
@@ -102,6 +102,7 @@
     <script src="scripts/controllers/users.js"></script>
     <script src="scripts/controllers/user.js"></script>
     <script src="scripts/controllers/campaigns.js"></script>
+    <script src="scripts/controllers/campaign.js"></script>
     <script src="scripts/test.js"></script>
     <!-- endbuild -->
 </body>

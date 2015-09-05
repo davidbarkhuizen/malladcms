@@ -14,25 +14,19 @@ angular.module('mallcmsApp')
 
         $scope.userEdit = new User(null, '', '', '', false);
 
-        if ($routeParams.userId !== 'new') {
+        if ($routeParams.id !== 'new') {
 
-            var userId = parseInt($routeParams.userId);
+            var id = parseInt($routeParams.id);
 
             var match = $scope.dataModel.users.first(
                 function(x) { 
-                    return (x.id === userId); 
+                    return (x.id === id); 
                 });
 
             $scope.userEdit = match.clone();
         }
 
-    	$scope.originalUserstate = new User(
-      		$scope.userEdit.id,
-        	$scope.userEdit.name,
-        	$scope.userEdit.surname,
-        	$scope.userEdit.email,
-            $scope.userEdit.isAdmin
-        	);
+    	$scope.originalUserstate = $scope.userEdit.clone();
 
         $scope.password = {
             change:false,

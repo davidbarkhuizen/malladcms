@@ -33,7 +33,7 @@ angular.module('mallcmsApp')
   			}
 
   			$scope.dataModel.user = $scope.dataModel.users
-  				.first(function(x){ return (x.id == $scope.dataModel.user);});
+  				.first(function(x){ return (x.id == $scope.dataModel.user.id);});
 	  	};
 
 	  	var handleLoadUsersError = function(data, status, headers, config) {
@@ -97,7 +97,7 @@ angular.module('mallcmsApp')
 	  		var user = new User(data.id, data.name, data.surname, data.email, data.isAdmin);
 	  		$scope.dataModel.user = user;
 
-	  		if ($scope.dataModel.user.isAdmin) {
+	  		if ($scope.dataModel.user.isAdmin === true) {
 	  			$scope.loadUsers();
 	  		}
 	  		else {

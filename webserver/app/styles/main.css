@@ -1,3 +1,12 @@
+/* selected element does not have outline */
+a:focus,
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+	outline: none;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -17,15 +26,15 @@ body {
   text-align: center;
 }
 
-.one-point-five-text {
+.text150 {
   font-size:1.5em;
 }
 
-.double-text {
+.text200 {
   font-size:2em;
 }
 
-.triple-text {
+.text300 {
   font-size:3em;
 }
 
@@ -55,4 +64,12 @@ body {
 
 label {
 	font-weight: normal !important;
+}
+
+.tab-active {
+	 border-bottom-color:white !important;
+}
+
+.tab-inactive {
+
 }

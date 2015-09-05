@@ -32,7 +32,7 @@ angular
         controller: 'UsersCtrl',
         controllerAs: 'users'
       })
-      .when('/user/:userId', {
+      .when('/user/:id', {
         templateUrl: 'views/user.html',
         controller: 'UserCtrl',
         controllerAs: 'user'
@@ -41,6 +41,11 @@ angular
         templateUrl: 'views/campaigns.html',
         controller: 'CampaignsCtrl',
         controllerAs: 'campaigns'
+      })
+      .when('/campaign/:id', {
+        templateUrl: 'views/campaign.html',
+        controller: 'CampaignCtrl',
+        controllerAs: 'campaign'
       })
       .otherwise({
         redirectTo: '/'

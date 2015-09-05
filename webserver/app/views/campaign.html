@@ -1,0 +1,57 @@
+<div>
+	<div class='view-header'>
+		Create A New Media Campaign
+	</div>
+
+	<br/>
+
+	<div>
+		<ul class="nav nav-tabs text150">
+			<li role="presentation" ng-class="tabClass(1)"><a href="" ng-click='setActiveTab(1)'
+				>1. Campaign</a></li>
+			<li role="presentation" ng-class="tabClass(2)"><a href="" ng-click='setActiveTab(2)'
+				>2. Malls</a></li>
+			<li role="presentation" ng-class="tabClass(3)"><a href="" ng-click='setActiveTab(3)'
+				>3. Files & Scheduling</a></li>
+		</ul>
+		<div style='
+			width:100%;
+			border-color:#dddddd;
+			border-left-style:solid;border-right-style:solid;border-bottom-style:solid;
+			border-width:1px;
+			'>
+			<div style='padding-top:10px;padding-left:10px;'>
+				<div ng-show='isActiveTab(1)'>
+					Campaign
+				</div>
+				<div ng-show='isActiveTab(2)'>
+					Malls
+				</div>
+				<div ng-show='isActiveTab(3)'>
+					Files &amp; Scheduling
+				</div>
+			</div>
+			
+			<div style='height:100px;'>
+			</div>
+			
+			<div style='padding:10px;'>
+				<a href="" ng-click='gotoPreviousTab()' ng-if="!isActiveTab(1)" style='float:left;'>
+					<button type="button" class="btn btn-primary btn-sm">Previous</button>
+				</a>
+				<a href="" ng-click='gotoNextTab()' ng-if="!isActiveTab(tabCount)" style='float:right;'>
+					<button type="button" class="btn btn-primary btn-sm">Next</button>
+				</a>
+				<a href="" 
+					ng-click='gotoNextTab()'
+					ng-disabled='(!canSubmitCampaign())' 
+					ng-if="isActiveTab(tabCount)"
+					style='float:right;'>
+					<button type="button" ng-disabled='(!canSubmitCampaign())' class="btn btn-primary btn-sm">Submit Campaign</button>
+				</a>
+				<div style='clear:both;'>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
