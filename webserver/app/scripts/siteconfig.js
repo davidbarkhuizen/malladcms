@@ -7,7 +7,8 @@ var siteConfig = {
 	api : {
 		user : "user",
 		users : "users",
-		campaigns : "campaigns",
+		malls : "malls",
+		campaign : "campaign",
 		campaignSummaries : "campaignsummaries"
 	},
 

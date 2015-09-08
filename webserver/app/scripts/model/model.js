@@ -79,9 +79,6 @@ var privateModel = {
 	//
 	ajax : false,
 
-	// init trigger
-	bootstrapping : true,
-
 	user : null,
 	users : [],
 

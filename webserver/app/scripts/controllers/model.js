@@ -18,8 +18,13 @@ angular.module('mallcmsApp')
   		: '';
   	};
 
-	$scope.$watch('dataModel.users.length', function(after, before) {
-  		if (after > 0) { $scope.handleLoadSequence('users'); }	
+  	// USERS
+  	//
+	$scope.unBindUsersWatch = $scope.$watch('dataModel.users.length', function(after, before) {
+  		if (after > 0) { 
+  			$scope.unBindUsersWatch();
+  			$scope.handleLoadSequence('users'); 
+  		}	
 	});
   	$rootScope.$on(Event.LoadUsers, function(evt, data){ $scope.loadUsers(); })
   	$scope.loadUsers = function() {
@@ -60,8 +65,13 @@ angular.module('mallcmsApp')
 		.error(handleLoadUsersError);
   	};
 
-  	$scope.$watch('dataModel.campaignSummaries.length', function(after, before) {
-  		if (after > 0) { $scope.handleLoadSequence('campaigns'); }	
+  	// CAMPAIGN SUMMARIES
+  	// 
+  	$scope.unBindCampaignSummariesWatch = $scope.$watch('dataModel.campaignSummaries.length', function(after, before) {
+  		if (after > 0) { 
+  			$scope.unBindCampaignSummariesWatch();
+  			$scope.handleLoadSequence('campaigns'); 
+  		}	
 	});
   	$rootScope.$on(Event.LoadCampaignSummaries, function(evt, data){ $scope.loadCampaignSummaries(); })
   	$scope.loadCampaignSummaries = function() {
@@ -96,8 +106,13 @@ angular.module('mallcmsApp')
 		.error(handleLoadCampaignSummariesError);
   	};
 
-  	$scope.$watch('dataModel.malls.length', function(after, before) {
-  		if (after > 0) { $scope.handleLoadSequence('malls'); }	
+  	// MALLS
+  	//
+  	$scope.unBindMallsWatch = $scope.$watch('dataModel.malls.length', function(after, before) {
+  		if (after > 0) {
+  			$scope.unBindMallsWatch();
+  			$scope.handleLoadSequence('malls'); 
+  		}	
 	});
 	$rootScope.$on(Event.LoadMalls, function(evt, data){ $scope.loadMalls(); })
   	$scope.loadMalls = function() {
@@ -132,9 +147,11 @@ angular.module('mallcmsApp')
 		.error(handleLoadMallsError);
   	};
 
-	$scope.$watch('dataModel.user', function(after, before) {
-		if (($scope.dataModel.bootstrapping === true) && (after !== null)) { 
-	  		$scope.dataModel.bootstrapping = false;
+  	// USER
+  	//
+	$scope.unBindUserWatch = $scope.$watch('dataModel.user', function(after, before) {
+		if (after !== null) { 
+	  		$scope.unBindUserWatch();
 			$scope.handleLoadSequence('user') 
 		};
 	});
@@ -160,6 +177,44 @@ angular.module('mallcmsApp')
 		})
 		.success(handleUserQueryResponse)
 		.error(handleUserQueryError);
+  	};
+
+  	// campaign
+  	//
+	$rootScope.$on(Event.LoadCampaign, function(evt, id){ $scope.loadCampaign(id); })
+  	$scope.loadCampaign = function(id) {
+
+	  	var handleLoadCampaignResponse = function(data, status, headers, config) {
+
+	  		var dto = data;
+
+	  		var campaign = new Campaign
+	  			(
+  				dto.id, 
+	  			dto.code,
+	  			dto.description,
+	  			dto.isActive,
+	  			dto.startDate,
+	  			dto.endDate,
+	  			dto.malls
+	  			);
+
+	  		$scope.dataModel.campaign = campaign;
+	  	};
+
+	  	var handleLoadCampaignError = function(data, status, headers, config) {
+
+	  		var campaign = test.campaigns.first(function(c){ return (c.id == id); });
+			handleLoadCampaignResponse(campaign);
+	  	};
+
+	  	$http({
+		    url: siteConfig.apiUrl(siteConfig.api.campaign),
+		    method: "GET",
+		    params: { "id" : id }
+		})
+		.success(handleLoadCampaignResponse)
+		.error(handleLoadCampaignError);
   	};
 
 	$scope.handleLoadSequence = function(source) {

@@ -8,7 +8,11 @@
  * Controller of the mallcmsApp
  */
 angular.module('mallcmsApp')
-  .controller('CampaignCtrl', function ($scope, $routeParams, DataModel) {
+  .controller('CampaignCtrl', function ($scope, $routeParams, DataModel, $rootScope) {
+
+  	$scope.loading = function() {
+  		return ($scope.dataModel.campaign === null) ? true : false;
+  	};
 
 	$scope.dataModel = DataModel;
 
@@ -39,23 +43,17 @@ angular.module('mallcmsApp')
 			: $scope.activeTab;
 	}
 
+	// INIT --------------------------------------------------------------------------
+
 	var malls = [];
-	$scope.dataModel.malls.forEach(function(mall){ malls.push(mall); });	
+	$scope.dataModel.malls.forEach(function(mall){ malls.push(mall); });
 
 	$scope.campaignEdit = new Campaign(null, '', '', false, new Date(), new Date(), malls);
-
 	if ($routeParams.id !== 'new') {
 
-	    var id = parseInt($routeParams.id);
+		var id = parseInt($routeParams.id);
 
-	    /*
-	    var match = $scope.dataModel.users.first(
-	        function(x) { 
-	            return (x.id === id); 
-	        });
-
-	    $scope.campaignEdit = match.clone();
-	    */
+		$rootScope.$emit(Event.LoadCampaign, id);
 	}
 
 	$scope.originalCampaignState = $scope.campaignEdit.clone();
