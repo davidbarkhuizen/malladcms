@@ -1,6 +1,12 @@
 'use strict';
 
-var Event = {
+var Event = Object.freeze({
+	
+	LoadUser : guid(),
+
 	LoadUsers : guid(),
-	LoadCampaigns : guid()
-};
+
+	LoadMallUnits : guid(),
+	LoadMalls : guid(),
+	LoadCampaignSummaries : guid()
+});

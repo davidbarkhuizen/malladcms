@@ -48,6 +48,36 @@ var test = {
 		return new Campaign(id, code, description, isActive, startDate, endDate);
 	},
 
+	genTestMalls: function() {
+
+		var names = [
+			"Alberton City", 
+			"Brooklyn Mall", 
+			"Canal Walk", 
+			"Cavendish Square", 
+			"Cresta", 
+			"Eastgate",
+			"East Point Mall",
+			"Fourways Mall",
+			"Gateway",
+			"Hyde Park",
+			"Northgate",
+			"Rosebank Mall",
+			"Sandton City",
+			"Southgate",
+			"The Zone"
+		];
+
+		var malls = [];
+		for(var i = 0; i < names.length; i++) {
+
+			var mall = new Mall(i, names[i], '');
+			malls.push(mall);
+		}
+
+		return malls;
+	},
+
 	genRandomTestCampaigns: function(count) {
 
 		var testCampaigns = [];
@@ -67,4 +97,5 @@ var test = {
 };
 
 test.users = test.genRandomTestUsers(15);
+test.malls = test.genTestMalls();
 test.campaigns = test.genRandomTestCampaigns(15);

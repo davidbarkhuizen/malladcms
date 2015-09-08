@@ -38,15 +38,16 @@ function CampaignSummary(id, code, description, isActive, startDate, endDate) {
 	};
 }
 
-function Mall(id, name) {
+function Mall(id, name, description) {
 
 	var that = this;
 
 	this.id = id;
 	this.name = name;
+	this.description = description;
 
 	this.clone = function() {
-		return new Mall(that.id, that.name);
+		return new Mall(that.id, that.name, that.description);
 	}
 }
 
@@ -74,17 +75,20 @@ function Campaign(id, code, description, isActive, startDate, endDate, malls) {
 
 var privateModel = {
 
-	// global ajax lock
+	// global ajax user action lock
 	//
 	ajax : false,
+
+	// init trigger
+	bootstrapping : true,
 
 	user : null,
 	users : [],
 
-	campaigns : [],
-	campaignSummaries : [],
+	//units : [],
+	malls : [],
 
-	malls : []
+	campaignSummaries : []	
 };
 
 angular.module('mallcmsApp')
