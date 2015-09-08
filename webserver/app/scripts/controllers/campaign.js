@@ -10,10 +10,6 @@
 angular.module('mallcmsApp')
   .controller('CampaignCtrl', function ($scope, $routeParams, DataModel, $rootScope) {
 
-  	$scope.loading = function() {
-  		return ($scope.dataModel.campaign === null) ? true : false;
-  	};
-
 	$scope.dataModel = DataModel;
 
 	$scope.activeTab = 1;
@@ -43,23 +39,50 @@ angular.module('mallcmsApp')
 			: $scope.activeTab;
 	}
 
+	// -------------------------------------------------------------------------------
+
+	$scope.createUpdateCampaignServerError = function() {
+		return null;
+	};
+
+	$scope.isOpen = {
+	    startDate: false,
+	    endDate: false,
+	};
+	$scope.toggleStartDateIsOpen = function($event) {
+    	$scope.isOpen.startDate = true;
+  	};
+	$scope.toggleEndDateIsOpen = function($event) {
+    	$scope.isOpen.endDate = true;
+  	};
+
+  	$scope.dateOptions = {
+    	formatYear: 'yy',
+    	startingDay: 1
+  	};
+
+	$scope.maxDate = new Date(2020, 5, 22);
+	$scope.minDate = new Date(2015, 1, 1)
+
 	// INIT --------------------------------------------------------------------------
+
+	$scope.originalCampaignState = new Campaign(null, '', '', false, null, null, malls);
+	$scope.campaignEdit = $scope.originalCampaignState.clone();
+
+  	$rootScope.$on(Event.CampaignLoaded, function(evt, campaign){
+  		$scope.originalCampaignState = campaign;
+  		$scope.campaignEdit = campaign.clone();
+  	});
 
 	var malls = [];
 	$scope.dataModel.malls.forEach(function(mall){ malls.push(mall); });
 
-	$scope.campaignEdit = new Campaign(null, '', '', false, new Date(), new Date(), malls);
 	if ($routeParams.id !== 'new') {
-
 		var id = parseInt($routeParams.id);
-
 		$rootScope.$emit(Event.LoadCampaign, id);
 	}
 
-	$scope.originalCampaignState = $scope.campaignEdit.clone();
-
 	$scope.canSubmitCampaign = function() {
-		console.log('canSubmitCampaign');
 		return false;
 	};
 });

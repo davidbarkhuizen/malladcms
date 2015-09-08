@@ -10,5 +10,6 @@ var Event = Object.freeze({
 	LoadMalls : guid(),
 	LoadCampaignSummaries : guid(),
 
-	LoadCampaign : guid() 
+	LoadCampaign : guid(),
+	CampaignLoaded : guid() 
 });

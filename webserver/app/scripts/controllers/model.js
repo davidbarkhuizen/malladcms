@@ -199,7 +199,7 @@ angular.module('mallcmsApp')
 	  			dto.malls
 	  			);
 
-	  		$scope.dataModel.campaign = campaign;
+	  		$rootScope.$emit(Event.CampaignLoaded, campaign);
 	  	};
 
 	  	var handleLoadCampaignError = function(data, status, headers, config) {

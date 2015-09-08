@@ -1,10 +1,10 @@
 <div>
 	<div class='view-header'>
-		<span ng-if='(dataModel.campaign.id === null)'>
+		<span ng-if='(campaignEdit.id === null)'>
 			Create A New Media Campaign
 		</span>
-		<span ng-if='(dataModel.campaign.id !== null)'>
-			Manage Media Campaign ({{ dataModel.campaign.code }})
+		<span ng-if='(campaignEdit.id !== null)'>
+			Manage Media Campaign ({{ campaignEdit.code.length > 0 ? campaignEdit.code : "New" }})
 		</span>
 		<span>
 			- Step {{ activeTab }}
@@ -32,26 +32,115 @@
 
 <!-- Step 1 -->
 <div ng-show='isActiveTab(1)'>
-	
-	<div>Enter all the information that applies to the campaign</div>
+	<div class='bold	'>
+		Enter all the information that applies to the campaign
+	</div>
+
+	<br/>
+
+	<form name='campaignEditForm' class='text150'>
+
+		<div class='error' ng-if='(createUpdateCampaignServerError !== null)'>
+			{{ createUpdateCampaignServerError }}
+		</div>
+
+		<label>
+			<span class='form-label'>Contract Code</span>
+			<input
+				type='text'
+				name='code'
+				ng-model="campaignEdit.code"
+				required
+				ng-disabled="(campaignEdit.id !== null) || dataModel.ajax"
+			/>
+	   		<div role='alert' class="error" ng-show="campaignEditForm.code.$error.required">
+	   			required!
+			</div>
+		</label>
+
+		<label>
+			<span class='form-label'>Description</span>
+			<input
+				type='text'
+				name='description'
+				ng-model="campaignEdit.description"
+				ng-disabled="dataModel.ajax"
+			/>
+		</label>
+
+		<label>
+			<span class='form-label'>Start Date</span>
+			<input
+				name="startDate"
+ 				type="text"
+ 				style='text-align:center;'
+ 				datepicker-popup="dd-MMMM-yyyy"
+ 				ng-model="campaignEdit.startDate"
+ 				is-open="isOpen.startDate"
+				ng-required="true"
+ 				close-text="Close"
+ 				ng-disabled="true"
+ 				/>
+ 				<button
+ 					type="button"
+ 					ng-click='toggleStartDateIsOpen()'
+ 					class="btn btn-primary btn-sm">
+ 					edit
+				</button>
+				<div role='alert' class="error" ng-show="campaignEditForm.startDate.$error.required">
+	   			required!
+				</div>
+		</label>
+
+		<label>
+			<span class='form-label'>End Date</span>
+			<input
+				name="endDate"
+ 				type="text"
+ 				style='text-align:center;'
+ 				datepicker-popup="dd-MMMM-yyyy"
+ 				ng-model="campaignEdit.endDate"
+ 				is-open="isOpen.endDate"
+				ng-required="true"
+ 				close-text="Close"
+ 				ng-disabled="true"
+ 				/>
+ 				<button
+ 					type="button"
+ 					ng-click='toggleEndDateIsOpen()'
+ 					class="btn btn-primary btn-sm">
+ 					edit
+				</button>
+				<div role='alert' class="error" ng-show="campaignEditForm.endDate.$error.required">
+	   			required!
+				</div>
+		</label>
+
+		<br/>
+
+		<label>
+			<span class='form-label'>Active</span>
+			<input
+				name="isActive"
+ 				type="checkbox"
+ 				ng-model="campaignEdit.isActive"
+ 				/>
+		</label>
+	</form>
 </div>
 			
 <!-- Step 2 -->
 <div ng-show='isActiveTab(2)'>
-	
 	<div>Select all the malls that apply to the campaign</div>
 </div>
 			
 <!-- Step 3 -->
 <div ng-show='isActiveTab(3)'>
-	
 	<div>Select all the media files and specify dates, times and mediums</div>
 </div>
+
 			</div>
-			
-			<div style='height:100px;'>
-			</div>
-			
+	
 			<div style='padding:10px;'>
 				<a href="" ng-click='gotoPreviousTab()' ng-if="!isActiveTab(1)" style='float:left;'>
 					<button type="button" class="btn btn-primary btn-sm">Previous</button>
